@@ -13,7 +13,7 @@ fields = [
 params = {
   'name': 'My Python Ad',
   'adset_id': 'ad-set-id',
-  'creative': {'creative_id': '23849368927450502'},
+  'creative': {'creative_id': 'creative-id'},
   'status': 'PAUSED',
 }
 

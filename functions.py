@@ -176,7 +176,7 @@ def call_campaigns():
     print(data)
 
 
-call_campaigns()
+# call_campaigns()
 
 
 def call_ad_sets():
@@ -191,8 +191,11 @@ def call_ad_sets():
 
     params = {}
 
-    data = Campaign(id).get_ad_sets(fields=fields, params=params)
-    print(data)
+    return Campaign(id).get_ad_sets(fields=fields, params=params)
+
+
+response = call_ad_sets()
+print(response)
 
 
 # call_ad_sets()
@@ -259,4 +262,4 @@ def create_carousel():
   print(data)
 
 
-# create_carousel()
+create_carousel()

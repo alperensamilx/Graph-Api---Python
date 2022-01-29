@@ -16,25 +16,9 @@ id = '{AD_ACCPUNT_ID}'
 FacebookAdsApi.init(access_token=access_token)
 
 
-from facebook_business.adobjects.adaccount import AdAccount
 
-from facebook_business.adobjects.campaign import Campaign
-from facebook_business.adobjects.adset import AdSet
-from facebook_business.adobjects.ad import Ad
-from facebook_business.adobjects.adcreative import AdCreative
-from facebook_business.adobjects.page import Page
-from facebook_business.adobjects.pagepost import PagePost
-
-from facebook_business.api import FacebookAdsApi
-
-access_token = 'EAAQmOO1AkaoBAPbES3ZCGvwMk6dcnOCCetbAB9e3Fwxm9balFkXZAUKP8mKAMMx4qU3OR1zJvjuGX6iOb30Au778xNcOsZAqWIF1YByf44GoC7uIi1KOBUGLDUMXqKjoZAjyV41v41fHNlrLJ94nu5X8bcNx1W836XtZAFpvccyoZBaFN78jdlTa3X0XqbtY8vmQAllAk9AgZDZD'
-app_secret = '3c074e1ee7a8239f64bf469eed224d05'
-app_id = '1167925847298474'
-id = 'act_68601302'
-FacebookAdsApi.init(access_token=access_token)
-
-
-def create_campaigns():
+# Creating Campaign
+def create_campaign():
     name = str(input('Campaign Name: '))
     print('NONE, EMPLOYMENT, HOUSING, CREDIT, ISSUES_ELECTIONS_POLITICS, ONLINE_GAMBLING_AND_GAMING')
     special_ad_categories = str(input('Special Ad Categories: '))
@@ -60,8 +44,8 @@ def create_campaigns():
 
 # create_campaigns()
 
-
-def create_ad_sets():
+# Creating Ad Set
+def create_ad_set():
     campaign_id = str(input('Campaign ID: '))
     name = str(input('Ad set name: '))
 
@@ -105,7 +89,7 @@ def create_ad_sets():
     print(data)
 
 
-# create_ad_sets()
+# create_ad_set()
 
 
 def ad_creative():
@@ -139,7 +123,8 @@ def ad_creative():
 # ad_creative()
 
 
-def create_ads():
+# Creating Ad
+def create_ad():
     ad_set_id = str(input('Adset ID: '))
     name = str(input('Ad Name: '))
     creative_id = str(input('Creative ID: '))
@@ -163,8 +148,8 @@ def create_ads():
 
 # create_ads()
 
-
-def call_campaigns():
+# Calling Campaign
+def call_campaign():
     fields = [
       'name',
       'objective',
@@ -172,14 +157,16 @@ def call_campaigns():
     params = {
       'effective_status': ['PAUSED'],
     }
-    data = AdAccount(id).get_campaigns(fields=fields, params=params)
-    print(data)
+    return AdAccount(id).get_campaigns(fields=fields, params=params)
+
+# response = call_campaign()
+# print(response)
 
 
-# call_campaigns()
+# call_campaign()
 
-
-def call_ad_sets():
+# Calling Ad Set
+def call_ad_set():
     fields = [
         'name',
         'start_time',
@@ -193,12 +180,8 @@ def call_ad_sets():
 
     return Campaign(id).get_ad_sets(fields=fields, params=params)
 
-
-response = call_ad_sets()
-print(response)
-
-
-# call_ad_sets()
+# response = call_campaign()
+# print(response)
 
 
 def create_video():
@@ -260,6 +243,3 @@ def create_carousel():
 
   data = Page(id).get_posts(fields=fields, params=params)
   print(data)
-
-
-create_carousel()

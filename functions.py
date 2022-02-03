@@ -42,20 +42,29 @@ def create_campaign():
     print(data)
 
 
-# create_campaigns()
-
 # Creating Ad Set
 def create_ad_set():
     campaign_id = str(input('Campaign ID: '))
     name = str(input('Ad set name: '))
 
+    print('Budget & schedule')
+    print('52500')
     lifetime_budget = str(input('Lifetime Budget: '))
+    print('YYYY-MM-DDTHH:MM:SS')
     start_time = str(input('Start Date: '))
+    print('YYYY-MM-DDTHH:MM:SS')
     end_time = str(input('End Date: '))
 
-    optimization_goal = str(input('Optimization for ad delivery: '))
-    bid_amount = str(input('Bid control (optional): '))
+    print('Audience')
+    age_min = str(input('Age Min: '))
+    age_max = str(input('Age Max: '))
 
+    print('Optimization & delivery')
+    print('{NONE, APP_INSTALLS, AD_RECALL_LIFT, ENGAGED_USERS, EVENT_RESPONSES, IMPRESSIONS, LEAD_GENERATION, QUALITY_LEAD, LINK_CLICKS, OFFSITE_CONVERSIONS, PAGE_LIKES, POST_ENGAGEMENT, QUALITY_CALL, REACH, LANDING_PAGE_VIEWS, VISIT_INSTAGRAM_PROFILE, VALUE, THRUPLAY, DERIVED_EVENTS, APP_INSTALLS_AND_OFFSITE_CONVERSIONS, CONVERSATIONS, IN_APP_VALUE}')
+    optimization_goal = str(input('Optimization for ad delivery: '))
+    print('1370')
+    bid_amount = str(input('Bid control (optional): '))
+    print('PAUSED')
     status = str(input('Status: '))
 
     fields = [
@@ -71,8 +80,8 @@ def create_ad_set():
         'billing_event': 'IMPRESSIONS',
         'optimization_goal': optimization_goal,
         'targeting': {
-            'age_min': 20,
-            'age_max': 24,
+            'age_min': age_min,
+            'age_max': age_max,
             'behaviors': [{'id': 6002714895372, 'name': 'All travelers'}],
             'genders': [1],
             'geo_locations': {'countries': ['US'],
@@ -89,17 +98,18 @@ def create_ad_set():
     print(data)
 
 
-# create_ad_set()
-
-
+# Ad Creative
 def ad_creative():
     name = str(input('Creative Name: '))
+    print('103122378948499')
     page_id = str(input('Page ID: '))
     image_hash = str(input('Image Hash: '))
     website_url = str(input('Website URL: '))
     primary_text = str(input('Primary text: '))
     headline = str(input('Headline: '))
     description = str(input('Description: '))
+    print('LEARN_MORE')
+    call_to_action = str(input("Call to Action: "))
 
     fields = [
         'name',
@@ -114,21 +124,24 @@ def ad_creative():
                                   'message': primary_text,
                                   'name': headline,
                                   "description": description,
+                                  "call_to_action": {
+                                      "type": call_to_action
+                                  }
+
                               }},
     }
     data = AdAccount(id).create_ad_creative(fields=fields, params=params)
     print(data)
 
 
-# ad_creative()
-
-
 # Creating Ad
 def create_ad():
-    ad_set_id = str(input('Adset ID: '))
+    adset_id = str(input('Ad Set ID: '))
     name = str(input('Ad Name: '))
     creative_id = str(input('Creative ID: '))
     status = str(input('Status: '))
+    print("'since':YYYY-MM-DD,'until':YYYY-MM-DD'")
+    time_range = {'since': 2022 - 1 - 30, 'until': 2022 - 2 - 1}
 
     fields = [
         'name',
@@ -137,7 +150,7 @@ def create_ad():
     ]
     params = {
         'name': name,
-        'ad_set_id': ad_set_id,
+        'adset_id': adset_id,
         'creative': {'creative_id': creative_id},
         'status': status,
     }
@@ -146,10 +159,8 @@ def create_ad():
     print(data)
 
 
-# create_ads()
-
 # Calling Campaign
-def call_campaign():
+def call_campaigns():
     fields = [
       'name',
       'objective',
@@ -159,42 +170,108 @@ def call_campaign():
     }
     return AdAccount(id).get_campaigns(fields=fields, params=params)
 
-# response = call_campaign()
-# print(response)
+
+response_campaigns = call_campaigns()
 
 
-# call_campaign()
+def campaign_csv():
+    count = len(response_campaigns)
+    with open('campaigns.csv', 'w', newline='') as f:
+        fieldnames = ['id', 'name', 'objective']
+        the_writer = csv.DictWriter(f, fieldnames=fieldnames)
+
+        the_writer.writeheader()
+        for i in range(count):
+            the_writer.writerow({'id': response_campaigns[i]['id'], 'name': response_campaigns[i]['name'], 'objective': response_campaigns[i]['objective']})
+
 
 # Calling Ad Set
-def call_ad_set():
+def call_ad_sets():
     fields = [
+        'campaign_id',
+        'id',
         'name',
         'start_time',
         'end_time',
         'daily_budget',
         'lifetime_budget',
-        'delivery_estimate'
+        'optimization_goal',
+        'targeting',
+        # 'delivery_estimate',
     ]
 
     params = {}
 
     return Campaign(id).get_ad_sets(fields=fields, params=params)
 
-# response = call_campaign()
-# print(response)
+
+response_ad_sets = call_ad_sets()
+
+
+def ad_set_csv():
+    count = len(response_ad_sets)
+    with open('ad_sets.csv', 'w', newline='') as f:
+        fieldnames = ['campaign_id', 'id', 'name', 'start_time', 'end_time', 'daily_budget', 'lifetime_budget', 'optimization_goal']
+        the_writer = csv.DictWriter(f, fieldnames=fieldnames)
+
+        the_writer.writeheader()
+        for i in range(count):
+            the_writer.writerow({'campaign_id': response_ad_sets[i]['campaign_id'], 'id': response_ad_sets[i]['id'], 'name': response_ad_sets[i]['name'], 'start_time': response_ad_sets[i]['start_time'], 'end_time': response_ad_sets[i]['end_time'], 'lifetime_budget': response_ad_sets[i]['lifetime_budget'], 'daily_budget': response_ad_sets[i]['daily_budget'], 'optimization_goal': response_ad_sets[i]['optimization_goal']})
+
+
+# Calling ads
+def call_ads():
+    fields = [
+        'name',
+        'adset_id',
+        'creative',
+        'preview_shareable_link',
+        'tracking_specs',
+        'bid_amount',
+
+
+
+    ]
+    params = {
+      'effective_status': ['PAUSED'],
+    }
+    return AdAccount(id).get_ads(fields=fields, params=params)
+
+
+response_ads = call_ads()
+
+
+def ad_csv():
+    count = len(response_ads)
+    with open('ads.csv', 'w', newline='') as f:
+        fieldnames = ['id', 'name', 'adset_id', 'preview_shareable_link']
+        the_writer = csv.DictWriter(f, fieldnames=fieldnames)
+
+        the_writer.writeheader()
+        for i in range(count):
+            the_writer.writerow({'id': response_ads[i]['id'], 'name': response_ads[i]['name'], 'adset_id': response_ads[i]['adset_id'], 'preview_shareable_link': response_ads[i]['preview_shareable_link']})
 
 
 def create_video():
+    print('103122378948499')
+    page_id = str(input("Page ID: "))
+    print('https://scontent.fist4-1.fna.fbcdn.net/v/t1.18169-9/11701119_1096804877014160_4246085576298344409_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=RU_deGQrNEkAX9KwO2B&_nc_ht=scontent.fist4-1.fna&oh=00_AT-NqO6aiivQOOQ6eyzi9ShJmQqLh51BAUc-ABfyYPo5yQ&oe=62150B12')
+    image_url = str(input("Image URL: "))
+    print('5167895076567743')
+    video_id = str(input('Video ID: '))
+    print('LIKE_PAGE')
+    call_to_action = str(input("Call to Action: "))
+
     fields = [
     ]
     params = {
         'name': 'Video Creative',
 
-        'object_story_spec': {'page_id': '103122378948499',
+        'object_story_spec': {'page_id': page_id,
                               'video_data': {
-                                          'image_url': 'https://scontent.fist4-1.fna.fbcdn.net/v/t1.18169-9/11701119_1096804877014160_4246085576298344409_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=RU_deGQrNEkAX9KwO2B&_nc_ht=scontent.fist4-1.fna&oh=00_AT-NqO6aiivQOOQ6eyzi9ShJmQqLh51BAUc-ABfyYPo5yQ&oe=62150B12',
-                                          'video_id': '352843156367900',
-                                          'call_to_action': {'type': 'LIKE_PAGE', 'value': {'page': '103122378948499'}}
+                                          'image_url': image_url,
+                                          'video_id': video_id,
+                                          'call_to_action': {'type': call_to_action, 'value': {'page': page_id}}
                                             },
 
 
@@ -203,43 +280,41 @@ def create_video():
     data = AdAccount(id).create_ad_creative(fields=fields, params=params)
     print(data)
 
-# create_video()
-
 
 def create_carousel():
-  fields = [
-  ]
-  params = {
-    'message': 'Browse our latest products',
-    'published': '0',
-    'child_attachments': [{
-      'link': '<link>',
-      'name': 'Product 1',
-      'description': '$4.99',
-      'image_hash': '<imageHash>'
-    },
-      {
-        'link': '<link>',
-        'name': 'Product 2',
-        'description': '$4.99',
-        'image_hash': '<imageHash>'
-      },
-      {
-        'link': '<link>',
-        'name': 'Product 3',
-        'description': '$4.99',
-        'image_hash': '<imageHash>'
-      },
-      {
-        'link': '<link>',
-        'name': 'Product 4',
-        'description': '$4.99',
-        'image_hash': '<imageHash>'
-      },
-    ],
-    'caption': 'WWW.EXAMPLE.COM',
-    'link': 'http://www.example.com/products',
-  }
+      fields = [
+      ]
+      params = {
+        'message': 'Browse our latest products',
+        'published': '0',
+        'child_attachments': [{
+          'link': '<link>',
+          'name': 'Product 1',
+          'description': '$4.99',
+          'image_hash': '<imageHash>'
+        },
+          {
+            'link': '<link>',
+            'name': 'Product 2',
+            'description': '$4.99',
+            'image_hash': '<imageHash>'
+          },
+          {
+            'link': '<link>',
+            'name': 'Product 3',
+            'description': '$4.99',
+            'image_hash': '<imageHash>'
+          },
+          {
+            'link': '<link>',
+            'name': 'Product 4',
+            'description': '$4.99',
+            'image_hash': '<imageHash>'
+          },
+        ],
+        'caption': 'WWW.EXAMPLE.COM',
+        'link': 'http://www.example.com/products',
+      }
 
-  data = Page(id).get_posts(fields=fields, params=params)
-  print(data)
+      data = Page(id).get_posts(fields=fields, params=params)
+      print(data)

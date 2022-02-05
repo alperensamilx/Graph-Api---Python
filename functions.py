@@ -24,9 +24,9 @@ def create_campaign():
     special_ad_categories = str(input('Special Ad Categories: '))
     print(
         'Use one of: APP_INSTALLS, BRAND_AWARENESS, EVENT_RESPONSES, LEAD_GENERATION, LINK_CLICKS, LOCAL_AWARENESS, MESSAGES, OFFER_CLAIMS, PAGE_LIKES, POST_ENGAGEMENT, PRODUCT_CATALOG_SALES, REACH, STORE_VISITS, VIDEO_VIEWS, CONVERSIONS.')
-    objective = str(input('Campaign objective: '))
+    objective = str(input('Campaign objective: ')).upper()
     print('PAUSED')
-    status = str(input('Status: '))
+    status = str(input('Status: ')).upper()
 
     fields = [
         'name',
@@ -61,11 +61,11 @@ def create_ad_set():
 
     print('Optimization & delivery')
     print('{NONE, APP_INSTALLS, AD_RECALL_LIFT, ENGAGED_USERS, EVENT_RESPONSES, IMPRESSIONS, LEAD_GENERATION, QUALITY_LEAD, LINK_CLICKS, OFFSITE_CONVERSIONS, PAGE_LIKES, POST_ENGAGEMENT, QUALITY_CALL, REACH, LANDING_PAGE_VIEWS, VISIT_INSTAGRAM_PROFILE, VALUE, THRUPLAY, DERIVED_EVENTS, APP_INSTALLS_AND_OFFSITE_CONVERSIONS, CONVERSATIONS, IN_APP_VALUE}')
-    optimization_goal = str(input('Optimization for ad delivery: '))
+    optimization_goal = str(input('Optimization for ad delivery: ')).upper()
     print('1370')
     bid_amount = str(input('Bid control (optional): '))
     print('PAUSED')
-    status = str(input('Status: '))
+    status = str(input('Status: ')).upper()
 
     fields = [
         'name',
@@ -109,7 +109,7 @@ def ad_creative():
     headline = str(input('Headline: '))
     description = str(input('Description: '))
     print('LEARN_MORE')
-    call_to_action = str(input("Call to Action: "))
+    call_to_action = str(input("Call to Action: ")).upper()
 
     fields = [
         'name',
@@ -139,7 +139,7 @@ def create_ad():
     adset_id = str(input('Ad Set ID: '))
     name = str(input('Ad Name: '))
     creative_id = str(input('Creative ID: '))
-    status = str(input('Status: '))
+    status = str(input('Status: ')).upper()
     print("'since':YYYY-MM-DD,'until':YYYY-MM-DD'")
     time_range = {'since': 2022 - 1 - 30, 'until': 2022 - 2 - 1}
 
@@ -260,7 +260,7 @@ def create_video():
     print('5167895076567743')
     video_id = str(input('Video ID: '))
     print('LIKE_PAGE')
-    call_to_action = str(input("Call to Action: "))
+    call_to_action = str(input("Call to Action: ")).upper()
 
     fields = [
     ]

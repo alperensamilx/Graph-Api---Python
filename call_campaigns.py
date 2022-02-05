@@ -8,11 +8,31 @@ app_id = 'app-id'
 id = 'ad-account-id'
 FacebookAdsApi.init(access_token=access_token)
 
-fields = [
-  'name',
-  'objective',
-]
-params = {
-  'effective_status': ['PAUSED'],
-}
-print(AdAccount(id).get_campaigns(fields=fields, params=params,))
+
+def call_campaigns():
+    fields = [
+      'name',
+      'objective',
+    ]
+    params = {
+      'effective_status': ['PAUSED'],
+    }
+    return AdAccount(id).get_campaigns(fields=fields, params=params,)
+
+
+response = call_campaigns()
+print(response)
+
+
+def campaign_csv():
+    count = len(response)
+    with open('campaigns2.csv', 'w', newline='') as f:
+        fieldnames = ['id', 'name', 'objective']
+        the_writer = csv.DictWriter(f, fieldnames=fieldnames)
+
+        the_writer.writeheader()
+        for i in range(count):
+            the_writer.writerow({'id': response[i]['id'], 'name': response[i]['name'], 'objective': response[i]['objective']})
+
+
+campaign_csv()

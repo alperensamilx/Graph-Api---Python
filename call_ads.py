@@ -5,6 +5,10 @@ import json
 import csv
 
 
+access_token = '{ACCES-TOKEN}'
+app_secret = '{APP-SECRET}'
+app_id = '{APP_ID}'
+id = '{AD_ACCPUNT_ID}'
 FacebookAdsApi.init(access_token=access_token)
 
 

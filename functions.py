@@ -252,6 +252,20 @@ def ad_csv():
             the_writer.writerow({'id': response_ads[i]['id'], 'name': response_ads[i]['name'], 'adset_id': response_ads[i]['adset_id'], 'preview_shareable_link': response_ads[i]['preview_shareable_link']})
 
 
+def call_ad_creative():
+
+    fields = [
+        'name',
+        'image_hash'
+    ]
+
+    params = {
+    }
+    data = AdAccount(id).get_ad_creatives(fields=fields, params=params)
+    print(data)
+    
+    
+            
 def create_video():
     print('103122378948499')
     page_id = str(input("Page ID: "))

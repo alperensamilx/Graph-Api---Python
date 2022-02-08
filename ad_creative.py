@@ -4,11 +4,6 @@ from facebook_business.api import FacebookAdsApi
 
 
 
-access_token = 'EAAQmOO1AkaoBAFUNjoZCErBfAn3VOyqdNSDwh0DXwEruXy2TOUgNDYyrqIsfCXAb6k1Ndd6PZATIeZBJZAQImXTEOZBkZAhhDVDg2QdxLyfmHwj2cn0M6K5RQDYRvLwXZCJcIJ0urmPABCFhf3lOU8J7k0YvbwEkUjgFuNy5OI9UvhpU9CPHTGcqhWCTZBs8nNVjyNmBXVXZA2t6TXDCLZCvY6'
-app_secret = '3c074e1ee7a8239f64bf469eed224d05'
-app_id = '1167925847298474'
-id = 'act_68601302'
-FacebookAdsApi.init(access_token=access_token)
 
 
 # Ad Creative

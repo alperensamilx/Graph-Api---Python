@@ -1,3 +1,7 @@
+from facebook_business.adobjects.adaccount import AdAccount
+from facebook_business.api import FacebookAdsApi
+
+
 access_token = '{ACCES-TOKEN}'
 app_secret = '{APP-SECRET}'
 app_id = '{APP_ID}'

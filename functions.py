@@ -1,21 +1,16 @@
 from facebook_business.adobjects.adaccount import AdAccount
-
 from facebook_business.adobjects.campaign import Campaign
-from facebook_business.adobjects.adset import AdSet
-from facebook_business.adobjects.ad import Ad
-from facebook_business.adobjects.adcreative import AdCreative
 from facebook_business.adobjects.page import Page
-from facebook_business.adobjects.pagepost import PagePost
 
 from facebook_business.api import FacebookAdsApi
+
+import csv
 
 access_token = '{ACCES-TOKEN}'
 app_secret = '{APP-SECRET}'
 app_id = '{APP_ID}'
 id = '{AD_ACCPUNT_ID}'
 FacebookAdsApi.init(access_token=access_token)
-
-
 
 # Creating Campaign
 def create_campaign():
@@ -141,7 +136,6 @@ def create_ad():
     creative_id = str(input('Creative ID: '))
     status = str(input('Status: ')).upper()
     print("'since':YYYY-MM-DD,'until':YYYY-MM-DD'")
-    time_range = {'since': 2022 - 1 - 30, 'until': 2022 - 2 - 1}
 
     fields = [
         'name',
@@ -149,6 +143,7 @@ def create_ad():
 
     ]
     params = {
+        # 'time_range': "{'since': '2022-02-08', 'until': '2022-02-09'}",
         'name': name,
         'adset_id': adset_id,
         'creative': {'creative_id': creative_id},
@@ -263,9 +258,10 @@ def call_ad_creative():
     }
     data = AdAccount(id).get_ad_creatives(fields=fields, params=params)
     print(data)
-    
-    
-            
+
+
+
+
 def create_video():
     print('103122378948499')
     page_id = str(input("Page ID: "))
@@ -298,6 +294,7 @@ def create_video():
 def create_carousel():
       fields = [
       ]
+
       params = {
         'message': 'Browse our latest products',
         'published': '0',
@@ -332,3 +329,4 @@ def create_carousel():
 
       data = Page(id).get_posts(fields=fields, params=params)
       print(data)
+

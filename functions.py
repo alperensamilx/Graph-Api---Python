@@ -287,7 +287,7 @@ def create_video():
                               },
     }
     data = AdAccount(id).create_ad_creative(fields=fields, params=params)
-    print(data)
+    return data
 
 
 def create_carousel():

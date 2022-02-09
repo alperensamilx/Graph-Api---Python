@@ -126,7 +126,7 @@ def ad_creative():
                               }},
     }
     data = AdAccount(id).create_ad_creative(fields=fields, params=params)
-    print(data)
+    return data
 
 
 # Creating Ad

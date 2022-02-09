@@ -143,7 +143,6 @@ def create_ad():
 
     ]
     params = {
-        # 'time_range': "{'since': '2022-02-08', 'until': '2022-02-09'}",
         'name': name,
         'adset_id': adset_id,
         'creative': {'creative_id': creative_id},
@@ -192,7 +191,7 @@ def call_ad_sets():
         'lifetime_budget',
         'optimization_goal',
         'targeting',
-        # 'delivery_estimate',
+        'delivery_estimate',
     ]
 
     params = {}

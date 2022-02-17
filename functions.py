@@ -12,6 +12,7 @@ app_id = '{APP_ID}'
 id = '{AD_ACCPUNT_ID}'
 FacebookAdsApi.init(access_token=access_token)
 
+
 # Creating Campaign
 def create_campaign():
     name = str(input('Campaign Name: '))
@@ -26,6 +27,8 @@ def create_campaign():
     fields = [
         'name',
     ]
+
+
     params = {
         'name': name,
         'objective': objective,
@@ -126,7 +129,7 @@ def ad_creative():
                               }},
     }
     data = AdAccount(id).create_ad_creative(fields=fields, params=params)
-    return data
+    print(data)
 
 
 # Creating Ad
@@ -168,17 +171,6 @@ def call_campaigns():
 response_campaigns = call_campaigns()
 
 
-def campaign_csv():
-    count = len(response_campaigns)
-    with open('campaigns.csv', 'w', newline='') as f:
-        fieldnames = ['id', 'name', 'objective']
-        the_writer = csv.DictWriter(f, fieldnames=fieldnames)
-
-        the_writer.writeheader()
-        for i in range(count):
-            the_writer.writerow({'id': response_campaigns[i]['id'], 'name': response_campaigns[i]['name'], 'objective': response_campaigns[i]['objective']})
-
-
 # Calling Ad Set
 def call_ad_sets():
     fields = [
@@ -191,7 +183,7 @@ def call_ad_sets():
         'lifetime_budget',
         'optimization_goal',
         'targeting',
-        'delivery_estimate',
+        # 'delivery_estimate',
     ]
 
     params = {}
@@ -200,17 +192,6 @@ def call_ad_sets():
 
 
 response_ad_sets = call_ad_sets()
-
-
-def ad_set_csv():
-    count = len(response_ad_sets)
-    with open('ad_sets.csv', 'w', newline='') as f:
-        fieldnames = ['campaign_id', 'id', 'name', 'start_time', 'end_time', 'daily_budget', 'lifetime_budget', 'optimization_goal']
-        the_writer = csv.DictWriter(f, fieldnames=fieldnames)
-
-        the_writer.writeheader()
-        for i in range(count):
-            the_writer.writerow({'campaign_id': response_ad_sets[i]['campaign_id'], 'id': response_ad_sets[i]['id'], 'name': response_ad_sets[i]['name'], 'start_time': response_ad_sets[i]['start_time'], 'end_time': response_ad_sets[i]['end_time'], 'lifetime_budget': response_ad_sets[i]['lifetime_budget'], 'daily_budget': response_ad_sets[i]['daily_budget'], 'optimization_goal': response_ad_sets[i]['optimization_goal']})
 
 
 # Calling ads
@@ -235,16 +216,6 @@ def call_ads():
 response_ads = call_ads()
 
 
-def ad_csv():
-    count = len(response_ads)
-    with open('ads.csv', 'w', newline='') as f:
-        fieldnames = ['id', 'name', 'adset_id', 'preview_shareable_link']
-        the_writer = csv.DictWriter(f, fieldnames=fieldnames)
-
-        the_writer.writeheader()
-        for i in range(count):
-            the_writer.writerow({'id': response_ads[i]['id'], 'name': response_ads[i]['name'], 'adset_id': response_ads[i]['adset_id'], 'preview_shareable_link': response_ads[i]['preview_shareable_link']})
-
 
 def call_ad_creative():
 
@@ -256,9 +227,7 @@ def call_ad_creative():
     params = {
     }
     data = AdAccount(id).get_ad_creatives(fields=fields, params=params)
-    return data
-
-
+    print(data)
 
 
 def create_video():
@@ -287,7 +256,7 @@ def create_video():
                               },
     }
     data = AdAccount(id).create_ad_creative(fields=fields, params=params)
-    return data
+    print(data)
 
 
 def create_carousel():

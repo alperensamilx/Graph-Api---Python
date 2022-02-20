@@ -15,14 +15,37 @@ FacebookAdsApi.init(access_token=access_token)
 
 # Creating Campaign
 def create_campaign():
-    name = str(input('Campaign Name: '))
+    special_ad_categories_list = ['NONE', 'EMPLOYMENT', 'HOUSING', 'CREDIT', 'ISSUES_ELECTIONS_POLITICS', 'ONLINE_GAMBLING_AND_GAMING']
+    campaign_objective_list = ['APP_INSTALLS', 'BRAND_AWARENESS', 'EVENT_RESPONSES', 'LEAD_GENERATION', 'LINK_CLICKS', 'LOCAL_AWARENESS', 'MESSAGES', 'OFFER_CLAIMS', 'PAGE_LIKES', 'POST_ENGAGEMENT', 'PRODUCT_CATALOG_SALES', 'REACH', 'STORE_VISITS', 'VIDEO_VIEWS', 'CONVERSIONS']
+    status_list = ['ACTIVE', 'PAUSED']
+    name = input('Campaign Name: ')
     print('NONE, EMPLOYMENT, HOUSING, CREDIT, ISSUES_ELECTIONS_POLITICS, ONLINE_GAMBLING_AND_GAMING')
-    special_ad_categories = str(input('Special Ad Categories: '))
-    print(
-        'Use one of: APP_INSTALLS, BRAND_AWARENESS, EVENT_RESPONSES, LEAD_GENERATION, LINK_CLICKS, LOCAL_AWARENESS, MESSAGES, OFFER_CLAIMS, PAGE_LIKES, POST_ENGAGEMENT, PRODUCT_CATALOG_SALES, REACH, STORE_VISITS, VIDEO_VIEWS, CONVERSIONS.')
-    objective = str(input('Campaign objective: ')).upper()
-    print('PAUSED')
-    status = str(input('Status: ')).upper()
+    special_ad_categories = []
+    while True:
+        x = input('Special Ad Categories: ').upper()
+        if x in special_ad_categories_list:
+            special_ad_categories.append(x)
+            break
+        else:
+            print('Use one of: NONE, EMPLOYMENT, HOUSING, CREDIT, ISSUES_ELECTIONS_POLITICS, ONLINE_GAMBLING_AND_GAMING')
+    print('Use one of: APP_INSTALLS, BRAND_AWARENESS, EVENT_RESPONSES, LEAD_GENERATION, LINK_CLICKS, LOCAL_AWARENESS, MESSAGES, OFFER_CLAIMS, PAGE_LIKES, POST_ENGAGEMENT, PRODUCT_CATALOG_SALES, REACH, STORE_VISITS, VIDEO_VIEWS, CONVERSIONS.')
+    while True:
+        x = input('Campaign objective: ').upper()
+        if x in campaign_objective_list:
+            objective = x
+            break
+        else:
+            print('Use one of: APP_INSTALLS, BRAND_AWARENESS, EVENT_RESPONSES, LEAD_GENERATION, LINK_CLICKS, LOCAL_AWARENESS, MESSAGES, OFFER_CLAIMS, PAGE_LIKES, POST_ENGAGEMENT, PRODUCT_CATALOG_SALES, REACH, STORE_VISITS, VIDEO_VIEWS, CONVERSIONS.')
+
+    print('Use one of: ACTIVE, PAUSED')
+    while True:
+        x = input('Status: ').upper()
+        if x in status_list:
+            status = x
+            break
+        else:
+            print('Use one of: ACTIVE, PAUSED')
+
 
     fields = [
         'name',
@@ -38,7 +61,6 @@ def create_campaign():
 
     data = AdAccount(id).create_campaign(fields=fields, params=params)
     print(data)
-
 
 # Creating Ad Set
 def create_ad_set():

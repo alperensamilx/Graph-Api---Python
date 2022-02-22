@@ -4,7 +4,6 @@ from facebook_business.adobjects.page import Page
 
 from facebook_business.api import FacebookAdsApi
 
-import csv
 
 access_token = '{ACCES-TOKEN}'
 app_secret = '{APP-SECRET}'

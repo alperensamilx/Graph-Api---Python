@@ -4,6 +4,7 @@ from facebook_business.adobjects.page import Page
 
 from facebook_business.api import FacebookAdsApi
 
+import pandas as pd
 
 access_token = '{ACCES-TOKEN}'
 app_secret = '{APP-SECRET}'
@@ -204,7 +205,7 @@ def call_ad_sets():
         'lifetime_budget',
         'optimization_goal',
         'targeting',
-        # 'delivery_estimate',
+        'delivery_estimate',
     ]
 
     params = {}
@@ -213,6 +214,12 @@ def call_ad_sets():
 
 
 response_ad_sets = call_ad_sets()
+
+data = response_ad_sets[0]['delivery_estimate']['data']
+df = pd.DataFrame(columns=data[0]['daily_outcomes_curve'][0].keys())
+for x in data[0]['daily_outcomes_curve']:
+    df = df.append(x, ignore_index=True)
+print(df)
 
 
 # Calling ads
